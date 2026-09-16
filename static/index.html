@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PustakaDigital SMK - Aplikasi Peminjaman Buku Digital</title>
+    <meta name="description" content="Aplikasi Perpustakaan Sekolah Digital UKK RPL 2025/2026 berbasis Rust dan Web Modern.">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Main Style with Cache Buster -->
+    <link rel="stylesheet" href="/css/style.css?v=2026_ukk4_perpus">
+</head>
+<body>
+
+    <!-- Notification Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Navigation Header -->
+    <header class="navbar-container">
+        <div class="navbar-wrapper">
+            <div class="brand-logo" onclick="app.navigate('catalog')">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-book-bookmark"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="brand-title">Pustaka<span>Digital</span></span>
+                    <span class="brand-subtitle">SMK Rekayasa Perangkat Lunak</span>
+                </div>
+            </div>
+
+            <!-- Dynamic Nav Menu -->
+            <nav id="nav-links" class="nav-links">
+                <!-- Injected by JavaScript based on Login State & Role -->
+            </nav>
+
+            <!-- User Profile / Auth Button Area -->
+            <div id="nav-auth-area" class="nav-auth-area">
+                <!-- Injected dynamically: Login Button OR User Profile Menu -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main id="app-content" class="main-container">
+        <!-- Views are rendered dynamically by JS -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer no-print">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p><strong>PustakaDigital SMK</strong> &copy; 2025/2026. Uji Kompetensi Keahlian (UKK) Rekayasa Perangkat Lunak.</p>
+                <p class="tech-badge"><i class="fa-brands fa-rust"></i> Powered by <span>Rust (Axum + SQLite)</span> & Modern Web UI</p>
+            </div>
+            <div class="footer-right">
+                <span class="status-indicator"><span class="dot"></span> Localhost Server Online</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODALS CONTAINER -->
+    <div id="modal-backdrop" class="modal-backdrop" onclick="app.closeAllModals(event)">
+        <!-- Dynamic Modal Box Content -->
+        <div id="modal-box" class="modal-box" onclick="event.stopPropagation()">
+            <!-- Dynamic Modal Header, Body, Footer -->
+        </div>
+    </div>
+
+    <!-- Print Report Container (Hidden during normal view) -->
+    <div id="print-report-container" class="print-container"></div>
+
+    <!-- App JavaScript with Cache Buster -->
+    <script src="/js/app.js?v=2026_ukk4_perpus"></script>
+</body>
+</html>

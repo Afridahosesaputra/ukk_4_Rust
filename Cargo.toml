@@ -1,0 +1,19 @@
+[package]
+name = "perpustakaan_ukk"
+version = "1.0.0"
+edition = "2021"
+authors = ["Siswa RPL SMK <siswa@smk.sch.id>"]
+description = "Aplikasi Peminjaman Buku Perpustakaan Sekolah Digital - UKK RPL Paket 4"
+
+[dependencies]
+axum = { version = "0.7", features = ["macros", "multipart"] }
+tokio = { version = "1", features = ["full"] }
+tower-http = { version = "0.5", features = ["cors", "trace", "fs"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+rusqlite = { version = "0.31", features = ["bundled"] }
+bcrypt = "0.15"
+chrono = { version = "0.4", features = ["serde"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+uuid = { version = "1.8", features = ["v4", "serde"] }
