@@ -114,11 +114,21 @@ uuid = { version = "1.8", features = ["v4", "serde"] }
 
 ## 5. Langkah 3: Perancangan Database & Seeder Data (`src/db.rs`)
 
-Aplikasi ini menggunakan skema relasional 4 tabel utama:
+Berikut visualisasi diagram relasi entitas bergaya **MySQL Workbench Modeler** untuk 5 tabel ternormalisasi 3NF pada sistem LIBPRO DIGITAL:
+
+![ERD Diagram Perpustakaan Digital MySQL Workbench](assets/erd_diagram.png)
+
+> 📘 **Dokumentasi Lengkap & Slide Presentasi:**
+> - Panduan Detail & Kamus Data: [ERD.md](file:///d:/belajar%20ukk%20rust/ukk4/ERD.md)
+> - Berkas Presentasi Sidang: [Presentasi_Perpustakaan_Digital_UKK4.pptx](file:///d:/belajar%20ukk%20rust/ukk4/Presentasi_Perpustakaan_Digital_UKK4.pptx)
+> - Kanvas HTML Interaktif: [assets/erd_workbench.html](file:///d:/belajar%20ukk%20rust/ukk4/assets/erd_workbench.html)
+
+Aplikasi ini menggunakan skema relasional 5 tabel utama:
 1. `users` (Menyimpan data Admin dan Siswa dengan kolom `nis_nip`, `username`, `password_hash`, `role`).
 2. `categories` (Kategori buku).
 3. `books` (Data buku, `isbn`, judul, pengarang, penerbit, `stock`, `total_stock`, lokasi rak).
 4. `transactions` (Peminjaman & pengembalian, mencakup `borrow_date`, `due_date`, `return_date`, `status`, `fine_amount`).
+5. `user_tokens` (Manajemen token autentikasi sesi aktif siswa & petugas).
 
 Saat aplikasi pertama kali dijalankan, fungsi `init_db()` akan:
 - Mengaktifkan *Foreign Key Constraints* (`PRAGMA foreign_keys = ON;`).

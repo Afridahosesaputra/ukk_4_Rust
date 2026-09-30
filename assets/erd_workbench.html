@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Entity Relationship Diagram (ERD) - LIBPRO DIGITAL</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #ffffff;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+      margin: 0; padding: 0;
+      overflow: hidden;
+      width: 1400px;
+      height: 600px;
+    }
+    .canvas-container {
+      position: relative;
+      width: 1400px;
+      height: 600px;
+      background-color: #ffffff;
+      background-image: radial-gradient(#cbd5e1 1.2px, transparent 1.2px);
+      background-size: 20px 20px;
+      overflow: hidden;
+    }
+    .top-legend-bar {
+      position: absolute;
+      top: 10px; left: 30px; right: 30px;
+      height: 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 20;
+    }
+    .system-badge {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11.5px; font-weight: 700; color: #1e293b;
+      background: #f1f5f9; padding: 3px 12px;
+      border-radius: 4px; border: 1px solid #cbd5e1;
+    }
+    .system-badge span.dot {
+      width: 8px; height: 8px;
+      background: #0284c7; border-radius: 50%; display: inline-block;
+    }
+    .legend-group {
+      display: flex; align-items: center; gap: 16px;
+      font-size: 11px; font-weight: 600; color: #334155;
+      background: #f8fafc; padding: 3px 14px;
+      border-radius: 4px; border: 1px solid #cbd5e1;
+    }
+    .legend-item { display: flex; align-items: center; gap: 5px; }
+    .svg-layer {
+      position: absolute; top: 0; left: 0;
+      width: 1400px; height: 600px;
+      pointer-events: none; z-index: 5;
+    }
+    .table-box {
+      position: absolute;
+      background: #fbe6d5;
+      border: 1.5px solid #4a2c11;
+      border-radius: 6px;
+      box-shadow: 2px 3px 10px rgba(74, 44, 17, 0.15);
+      z-index: 10;
+      overflow: hidden;
+    }
+    .table-header {
+      background: linear-gradient(180deg, #f7b278 0%, #ea9553 100%);
+      border-bottom: 1.5px solid #4a2c11;
+      padding: 4px 10px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 12.5px;
+      color: #2b1504;
+      letter-spacing: 0.3px;
+    }
+    .table-body { padding: 2px 0; }
+    .column-row {
+      display: flex; align-items: center;
+      padding: 2px 8px; font-size: 11px;
+      line-height: 1.2; height: 20px;
+    }
+    .column-row:nth-child(even) { background-color: rgba(255, 255, 255, 0.25); }
+    .col-icon {
+      width: 16px; display: flex; align-items: center;
+      justify-content: flex-start; margin-right: 4px; flex-shrink: 0;
+    }
+    .col-name {
+      flex: 1; color: #1f140a;
+      font-family: Consolas, 'Segoe UI', monospace;
+      font-size: 11px; white-space: nowrap;
+    }
+    .col-name.pk { font-weight: 700; color: #0f172a; }
+    .col-name.fk { font-style: italic; font-weight: 600; color: #164e63; }
+    .col-type {
+      color: #334155; font-style: italic;
+      font-family: Consolas, 'Segoe UI', monospace;
+      font-size: 10px; margin-right: 6px; white-space: nowrap;
+    }
+    .col-null {
+      width: 14px; height: 14px;
+      border: 1px solid #78350f; background: #fff;
+      color: #78350f; font-size: 8px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 2px; flex-shrink: 0;
+    }
+    .col-null.empty { background: transparent; border-color: transparent; color: transparent; }
+    .icon-pk { width: 13px; height: 13px; fill: #d97706; }
+    .icon-fk { width: 13px; height: 13px; fill: #16a34a; }
+    .icon-attr {
+      width: 12px; height: 12px; background: #0284c7; color: #fff;
+      font-size: 8px; font-weight: bold; border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: sans-serif;
+    }
+    .bottom-note {
+      position: absolute; bottom: 8px; left: 30px; right: 30px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 10.5px; color: #475569; z-index: 6;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 3px 14px; border-radius: 4px; border: 1px solid #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+  <div class="canvas-container">
+    <div class="top-legend-bar">
+      <div class="system-badge">
+        <span class="dot"></span>
+        <span>MySQL Workbench Modeler • LIBPRO DIGITAL (UKK RPL 2026 - PAKET 4)</span>
+      </div>
+      <div class="legend-group">
+        <div class="legend-item">
+          <svg class="icon-pk" viewBox="0 0 24 24"><path d="M7 14c-2.76 0-5-2.24-5-5s2.24-5 5-5c2.42 0 4.44 1.72 4.9 4h6.1l2 2-1 2 2 2-2 2h-7.1c-.46 2.28-2.48 4-4.9 4zm0-8C5.34 6 4 7.34 4 9s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+          <span>Primary Key (PK)</span>
+        </div>
+        <div class="legend-item">
+          <svg class="icon-fk" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          <span>Foreign Key (FK)</span>
+        </div>
+        <div class="legend-item">
+          <span class="icon-attr">A</span>
+          <span>Attribute</span>
+        </div>
+        <div class="legend-item">
+          <span class="col-null">N</span>
+          <span>Nullable (YES)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SVG Layer for Connector Lines & Crow's Foot Notation -->
+    <svg class="svg-layer">
+      <!-- 1. users (1) -> transactions (N) (user_id) -->
+      <!-- users right (315, 95) -> transactions left (440, 140) -->
+      <line x1="322" y1="89" x2="322" y2="101" stroke="#2d3748" stroke-width="1.8" />
+      <line x1="327" y1="89" x2="327" y2="101" stroke="#2d3748" stroke-width="1.8" />
+      <path d="M 315 95 L 375 95 L 375 140 L 440 140" fill="none" stroke="#2d3748" stroke-width="1.8" />
+      <circle cx="428" cy="140" r="3" fill="#ffffff" stroke="#2d3748" stroke-width="1.5" />
+      <path d="M 430 140 L 440 134 M 430 140 L 440 140 M 430 140 L 440 146" fill="none" stroke="#2d3748" stroke-width="1.8" />
+
+      <!-- 2. users (1) -> user_tokens (N) (user_id) -->
+      <!-- users bottom (175, 280) -> user_tokens top (175, 380) -->
+      <line x1="169" y1="287" x2="181" y2="287" stroke="#2d3748" stroke-width="1.8" />
+      <line x1="169" y1="292" x2="181" y2="292" stroke="#2d3748" stroke-width="1.8" />
+      <path d="M 175 280 L 175 380" fill="none" stroke="#2d3748" stroke-width="1.8" stroke-dasharray="5 3" />
+      <circle cx="175" cy="368" r="3" fill="#ffffff" stroke="#2d3748" stroke-width="1.5" />
+      <path d="M 175 370 L 169 380 M 175 370 L 175 380 M 175 370 L 181 380" fill="none" stroke="#2d3748" stroke-width="1.8" />
+
+      <!-- 3. categories (1) -> books (N) (category_id) -->
+      <!-- categories bottom (980, 165) -> books top (980, 220) -->
+      <line x1="974" y1="172" x2="986" y2="172" stroke="#2d3748" stroke-width="1.8" />
+      <line x1="974" y1="177" x2="986" y2="177" stroke="#2d3748" stroke-width="1.8" />
+      <path d="M 980 165 L 980 220" fill="none" stroke="#2d3748" stroke-width="1.8" />
+      <circle cx="980" cy="208" r="3" fill="#ffffff" stroke="#2d3748" stroke-width="1.5" />
+      <path d="M 980 210 L 974 220 M 980 210 L 980 220 M 980 210 L 986 220" fill="none" stroke="#2d3748" stroke-width="1.8" />
+
+      <!-- 4. books (1) -> transactions (N) (book_id) -->
+      <!-- books left (850, 320) -> transactions right (730, 160) -->
+      <line x1="843" y1="314" x2="843" y2="326" stroke="#2d3748" stroke-width="1.8" />
+      <line x1="838" y1="314" x2="838" y2="326" stroke="#2d3748" stroke-width="1.8" />
+      <path d="M 850 320 L 790 320 L 790 160 L 730 160" fill="none" stroke="#2d3748" stroke-width="1.8" />
+      <circle cx="742" cy="160" r="3" fill="#ffffff" stroke="#2d3748" stroke-width="1.5" />
+      <path d="M 740 160 L 730 154 M 740 160 L 730 160 M 740 160 L 730 166" fill="none" stroke="#2d3748" stroke-width="1.8" />
+    </svg>
+
+    <!-- TABEL 1: users -->
+    <div class="table-box" style="left: 55px; top: 55px; width: 260px;">
+      <div class="table-header">users</div>
+      <div class="table-body">
+        <div class="column-row"><div class="col-icon"><svg class="icon-pk" viewBox="0 0 24 24"><path d="M7 14c-2.76 0-5-2.24-5-5s2.24-5 5-5c2.42 0 4.44 1.72 4.9 4h6.1l2 2-1 2 2 2-2 2h-7.1c-.46 2.28-2.48 4-4.9 4zm0-8C5.34 6 4 7.34 4 9s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div><div class="col-name pk">id</div><div class="col-type">int(11)</div><div class="col-null empty"></div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">nis_nip</div><div class="col-type">varchar(50)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">username</div><div class="col-type">varchar(50)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">password_hash</div><div class="col-type">varchar(255)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">full_name</div><div class="col-type">varchar(100)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">email</div><div class="col-type">varchar(100)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">phone</div><div class="col-type">varchar(20)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">class_name</div><div class="col-type">varchar(50)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">role</div><div class="col-type">enum(2)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">created_at</div><div class="col-type">timestamp</div><div class="col-null">N</div></div>
+      </div>
+    </div>
+
+    <!-- TABEL 2: categories -->
+    <div class="table-box" style="left: 850px; top: 55px; width: 260px;">
+      <div class="table-header">categories</div>
+      <div class="table-body">
+        <div class="column-row"><div class="col-icon"><svg class="icon-pk" viewBox="0 0 24 24"><path d="M7 14c-2.76 0-5-2.24-5-5s2.24-5 5-5c2.42 0 4.44 1.72 4.9 4h6.1l2 2-1 2 2 2-2 2h-7.1c-.46 2.28-2.48 4-4.9 4zm0-8C5.34 6 4 7.34 4 9s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div><div class="col-name pk">id</div><div class="col-type">int(11)</div><div class="col-null empty"></div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">name</div><div class="col-type">varchar(100)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">description</div><div class="col-type">text</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">created_at</div><div class="col-type">timestamp</div><div class="col-null">N</div></div>
+      </div>
+    </div>
+
+    <!-- TABEL 3: books -->
+    <div class="table-box" style="left: 850px; top: 220px; width: 280px;">
+      <div class="table-header">books</div>
+      <div class="table-body">
+        <div class="column-row"><div class="col-icon"><svg class="icon-pk" viewBox="0 0 24 24"><path d="M7 14c-2.76 0-5-2.24-5-5s2.24-5 5-5c2.42 0 4.44 1.72 4.9 4h6.1l2 2-1 2 2 2-2 2h-7.1c-.46 2.28-2.48 4-4.9 4zm0-8C5.34 6 4 7.34 4 9s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div><div class="col-name pk">id</div><div class="col-type">int(11)</div><div class="col-null empty"></div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">isbn</div><div class="col-type">varchar(30)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">title</div><div class="col-type">varchar(200)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">author</div><div class="col-type">varchar(100)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">publisher</div><div class="col-type">varchar(100)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">year</div><div class="col-type">int(11)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><svg class="icon-fk" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div><div class="col-name fk">category_id</div><div class="col-type">int(11)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">stock</div><div class="col-type">int(11)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">shelf_location</div><div class="col-type">varchar(50)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">created_at</div><div class="col-type">timestamp</div><div class="col-null">N</div></div>
+      </div>
+    </div>
+
+    <!-- TABEL 4: transactions -->
+    <div class="table-box" style="left: 440px; top: 75px; width: 290px;">
+      <div class="table-header">transactions</div>
+      <div class="table-body">
+        <div class="column-row"><div class="col-icon"><svg class="icon-pk" viewBox="0 0 24 24"><path d="M7 14c-2.76 0-5-2.24-5-5s2.24-5 5-5c2.42 0 4.44 1.72 4.9 4h6.1l2 2-1 2 2 2-2 2h-7.1c-.46 2.28-2.48 4-4.9 4zm0-8C5.34 6 4 7.34 4 9s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div><div class="col-name pk">id</div><div class="col-type">int(11)</div><div class="col-null empty"></div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">transaction_code</div><div class="col-type">varchar(50)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><svg class="icon-fk" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div><div class="col-name fk">user_id</div><div class="col-type">int(11)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><svg class="icon-fk" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div><div class="col-name fk">book_id</div><div class="col-type">int(11)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">borrow_date</div><div class="col-type">date</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">due_date</div><div class="col-type">date</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">return_date</div><div class="col-type">date</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">status</div><div class="col-type">enum(3)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">fine_amount</div><div class="col-type">decimal(10,2)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">created_at</div><div class="col-type">timestamp</div><div class="col-null">N</div></div>
+      </div>
+    </div>
+
+    <!-- TABEL 5: user_tokens -->
+    <div class="table-box" style="left: 55px; top: 380px; width: 260px;">
+      <div class="table-header">user_tokens</div>
+      <div class="table-body">
+        <div class="column-row"><div class="col-icon"><svg class="icon-pk" viewBox="0 0 24 24"><path d="M7 14c-2.76 0-5-2.24-5-5s2.24-5 5-5c2.42 0 4.44 1.72 4.9 4h6.1l2 2-1 2 2 2-2 2h-7.1c-.46 2.28-2.48 4-4.9 4zm0-8C5.34 6 4 7.34 4 9s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div><div class="col-name pk">token</div><div class="col-type">varchar(255)</div><div class="col-null empty"></div></div>
+        <div class="column-row"><div class="col-icon"><svg class="icon-fk" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div><div class="col-name fk">user_id</div><div class="col-type">int(11)</div><div class="col-null">N</div></div>
+        <div class="column-row"><div class="col-icon"><span class="icon-attr">A</span></div><div class="col-name">created_at</div><div class="col-type">timestamp</div><div class="col-null">N</div></div>
+      </div>
+    </div>
+
+    <!-- Bottom Status Note -->
+    <div class="bottom-note">
+      <div><strong>Kardinalitas:</strong> 1 : N (One-to-Many Relational) • <strong>Engine:</strong> MySQL InnoDB / SQLite3</div>
+      <div><strong>Integritas Relasi:</strong> FOREIGN KEY CASCADE & RESTRICT • <strong>Normalisasi:</strong> 3NF (Bebas Redundansi)</div>
+    </div>
+  </div>
+</body>
+</html>
